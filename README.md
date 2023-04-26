@@ -26,3 +26,9 @@ The service will be available on Benternet. By subscribing to it you can get wea
 2: windspeed, winddirection
 
 3: temperature, windspeed, winddirection
+
+
+
+# TODO 
+
+Adding geocoding api for extra service

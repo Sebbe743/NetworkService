@@ -28,14 +28,31 @@ int main( void )
         while( pusher.connected() )
         {
             //benternet communication
-            sleep( 10000 );
-            char buffer[data.size()];
-            int n, a=rand()%9+1, b=rand()%10;
-            n=sprintf (buffer, "Sebbe>subbed>%d%d", a, b);
+            sleep( 1000 );
+            char buffer [15];
+            int n=0;
+            std::string longi, lati, temp;
+
+            subscriber.recv( msg );
+            temp.append((char*) msg->data());
+
+            while(n<temp.size() && temp.at(n))
+            {
+                n++;
+            }
+            temp.substr(submessage.size(), n);
+
+            n=sprintf (buffer, "GET /v1/forecast?latitude=%s&longitude=%s&current_weather=true HTTP/1.0 \r\nHost: api.open-meteo.com\r\n\r\n", longi,lati);
             pusher.send( buffer, n);
             std::cout << "Pushed : " << buffer << std::endl;
 
-            subscriber.recv( msg );
+            for(int i=0; i>5; i++)
+            {
+                pusher.send( buffer, n);
+                std::cout << "Pushed : " << buffer << std::endl;
+            }
+
+
             std::cout << "Subscribed : [" << std::string( (char*) msg->data(), msg->size() ) << "]" << std::endl;
 
             //HTTP communication over TCP
